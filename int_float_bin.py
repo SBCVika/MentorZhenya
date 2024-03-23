@@ -30,13 +30,13 @@ float_list = [1.2, 0.34, 1.4, 2.5434]
 #1.3 print 2 sums of numbers: 1) less then 1 (0.34)   2) more or eq to 1 (5.1434)
 
 print("Task 1.3. 1) Sum for numbers < 1 ")
-out_float = sum([float_list[i] for i in range(0, len(float_list)) if float_list[i] < 1])
+out_float = sum(float_list[i] for i in range(len(float_list)) if float_list[i] < 1)
 
 print(f"{out_float} \n")
 
 print("Task 1.3. 2) Sum for numbers >= 1 ")
 
-out_float = sum([float_list[i] for i in range(0, len(float_list)) if float_list[i] >= 1])
+out_float = sum(float_list[i] for i in range(0, len(float_list)) if float_list[i] >= 1)
 
 print(f"{out_float} \n")
 
@@ -48,8 +48,7 @@ n=1.0
 t=1.0
 print("Task 1.4. threshold ")
 
-out_float = [float_list[i] for i in range(0, len(float_list)) if float_list[i] < n+t and float_list[i] > n-t]
-
+out_float = [item for item in float_list if n - t < item < n + t]
 print(f"{out_float} \n")
 
 

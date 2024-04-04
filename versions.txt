@@ -1,8 +1,5 @@
-In computing, a hex dump is a textual hexadecimal view (on screen or paper) of (often, but not necessarily binary) computer data, from memory or from a computer file or storage device.
-Looking at a hex dump of data is usually done in the context of either debugging, reverse engineering or digital forensics.
-Interactive editors that provide a similar view but also manipulating the data in question are called hex editors.
-In a hex dump, each byte (8 bits) is represented as a two-digit hexadecimal number.
-Hex dumps are commonly organized into rows of 8 or 16 bytes, sometimes separated by whitespaces.
-Some hex dumps have the hexadecimal memory address at the beginning.
-
-Some common names for this program function are hexdump, hd, od, xxd and simply dump or even D.
+1.1
+1.0.1
+1.0.9
+1.0.3
+1.0.3

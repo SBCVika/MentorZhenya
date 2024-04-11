@@ -3,7 +3,6 @@ import os
 import time
 import sys
 
-# Set the environment variable
 log_file = "log.txt"
 MAX_LINES_PER_CYCLE = 512
 

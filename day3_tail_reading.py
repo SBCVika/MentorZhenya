@@ -4,29 +4,35 @@ import time
 log_file = "log.txt"
 last_position = 0
 
-with open(log_file, 'r') as file:
-    file_content = file.read()
-    print(file_content)
-    last_position = file.tell()
-
-while True:
+def content_pos(log_file, last_position=0):
     with open(log_file, 'r') as file:
-        # Move the file pointer to the last position
         file.seek(last_position)
+        file_content = file.read()
+        last_position = file.tell()
+        content_position = (file_content, last_position)
+        return content_position
 
-        # Read the lines from the last position to the end of the file
+def read_update(log_file, content_position):
+    with open(log_file, 'r') as file:
+        file.seek(content_position[1])
         current_content = file.read()
 
-        if current_content != file_content:
-            print("File updated:")
-            file.seek(last_position)  # Move the file pointer back to the last position
-            updated_lines = file.readlines()
-            updated_lines = current_content.splitlines()  # Split content into separate lines
-            for line in updated_lines:
-                print(line)  # Print each updated line
-            file_content = current_content
+        if current_content != content_position[0]:
+            new_lines = current_content.splitlines()
+            old_lines = content_position[0].splitlines()
+            # Find and print new lines
+            new_content = ""
+            for line in new_lines:
+                if line not in old_lines:
+                    print(line)
+                    new_content += line + "\n"
 
-            # Update the last position to the current position
             last_position = file.tell()
-            sys.stdout.flush()
-    time.sleep(1)
+            content_position = (current_content, last_position)
+        return content_position
+
+if __name__ == "__main__":
+    while True:
+        content_position = content_pos(log_file)
+        content_position = read_update(log_file, content_position)
+        time.sleep(1)

@@ -34,6 +34,5 @@ def read_update(log_file, content_position):
 if __name__ == "__main__":
     content_position = content_pos(log_file)
     while True:
-        content_position = content_pos(log_file)
         content_position = read_update(log_file, content_position)
         time.sleep(1)

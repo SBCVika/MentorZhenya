@@ -1,4 +1,3 @@
-import sys
 import time
 
 log_file = "log.txt"

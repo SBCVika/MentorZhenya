@@ -34,11 +34,12 @@ class DayOfWeek:
 if __name__ == '__main__':
     # Create ArgumentParser object
     input_args = ArgumentParser(description='Usage: practice_4.py 2024 23')
-
     # Add arguments
     input_args.add_argument('year', type=int, help='year')
     input_args.add_argument('week', type=int, help='week of year')
     week_args = input_args.parse_args()
+    if week_args.week > 52:
+        raise ValueError("Week number cannot be greater than 52.")
     days = (week_args.week) * 7
     dow1 = DayOfWeek()
     dow2 = DayOfWeek()

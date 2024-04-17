@@ -39,10 +39,10 @@ if __name__ == '__main__':
     input_args.add_argument('year', type=int, help='year')
     input_args.add_argument('week', type=int, help='week of year')
     week_args = input_args.parse_args()
-    days = (week_args.week - 1) * 7
+    days = (week_args.week) * 7
     dow1 = DayOfWeek()
     dow2 = DayOfWeek()
-    dow1.day_to_date(days-6, week_args.year)
+    dow1.day_to_date(days - 6, week_args.year)
     dow2.day_to_date(days, week_args.year)
     print(f"{week_args.week}: {dow1.year} - {dow1.month} - {dow1.day} - {dow2.year} - {dow2.month} - {dow2.day}")
 

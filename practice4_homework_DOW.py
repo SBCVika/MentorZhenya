@@ -13,10 +13,21 @@ class DayOfWeek:
     @staticmethod
     def leap_year(n):
         return (n % 100 != 0 or n % 400 == 0) and (n % 4 == 0)
+
+
     @classmethod
     def get_month_mapping(cls, year):
         cls.MONTH_MAPPING[1] = 28 if cls.leap_year(year) else 29
         return cls.MONTH_MAPPING
+
+    @staticmethod
+    def day_shift(year):
+        years_since_1970 = year - 1970
+        days_since_1970 = years_since_1970 * 365
+        leap_years = (years_since_1970 + 2) // 4
+        days_since_1970 += leap_years
+        first_day_of_week = (days_since_1970 + 3) % 7
+        return first_day_of_week
 
     def day_to_date(self, days, current_year):
         current_month = 1
@@ -40,7 +51,10 @@ if __name__ == '__main__':
     week_args = input_args.parse_args()
     if week_args.week > 52:
         raise ValueError("Week number cannot be greater than 52.")
-    days = (week_args.week) * 7
+
+    day_shift = DayOfWeek.day_shift(week_args.year)
+
+    days = (week_args.week) * 7 - day_shift
     dow1 = DayOfWeek()
     dow2 = DayOfWeek()
     dow1.day_to_date(days - 6, week_args.year)

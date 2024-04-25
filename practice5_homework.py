@@ -1,143 +1,79 @@
-
+from datetime import datetime
 import os
-from math import ceil
-from time import sleep
+import time
+from argparse import ArgumentParser
 
 class TooLargeContent(Exception):
     pass
 
-# Example of closure
 def get_reader(log_file):
     current_pos = 0
 
     def read_next():
-        with open(log_file, 'r') as file:
-            nonlocal current_pos
-            file.seek(current_pos, os.SEEK_SET)
-            content = file.read()
-            current_pos = file.tell()
-            return content
+        try:
+            with open(log_file, 'r') as file:
+                nonlocal current_pos
+                file.seek(current_pos, os.SEEK_SET)
+                content = file.read()
+                current_pos = file.tell()
+                return content
+        except FileNotFoundError as e:
+            print(f"Error: File '{log_file}' not found. Please run writer first to create this file {e}")
+            raise e
+        except PermissionError as e:
+            print(f"Error: Permission denied for file '{log_file}'. Please add permissions {e}")
+            raise e
+        except Exception as e:
+            print(f"Error: An unexpected error occurred while reading file '{log_file}': {e}")
+            raise e
+
     return read_next
 
-
+def get_writer(output_file):
+    def write_data(data_to_write):
+        try:
+            with open(output_file, 'a') as file:
+                file.write(data_to_write)
+                print("Data written to", output_file)
+        except FileNotFoundError as e:
+            print(f"Error: File '{output_file}' not found. Please run the writer first to create this file. {e}")
+            raise e
+        except PermissionError as e:
+            print(f"Error: Permission denied for file '{output_file}'. Please add permissions. {e}")
+            raise e
+        except Exception as e:
+            print(f"Error: An unexpected error occurred while writing to file '{output_file}': {e}")
+            raise e
+    return write_data
 def print_lines(content):
-    """
-    Reads next chunk of file , splits to lines and prints them out
-    :param log_file: str: filenname
-    :return: None
-    """
-    if len(content) > 1<<32:
-        raise TooLargeContent()
-    lines = content.splitlines(keepends=True)
-    for line in lines:
-        print(line)
-from time import sleep
-
-class TooLargeContent(Exception):
-    pass
-
-# Example of closure
-def get_reader(log_file):
-    current_pos = 0
-
-    def read_next():
-        with open(log_file, 'r') as file:
-            nonlocal current_pos
-            file.seek(current_pos, os.SEEK_SET)
-            content = file.read()
-            current_pos = file.tell()
-            return content
-    return read_next
-
-
-def print_lines(content):
-    """
-    Reads next chunk of file , splits to lines and prints them out
-    :param log_file: str: filenname
-    :return: None
-    """
-    if len(content) > 1<<32:
+    if len(content) > 1 << 32:
         raise TooLargeContent()
     lines = content.splitlines(keepends=True)
     for line in lines:
         print(line)
 
-
 if __name__ == '__main__':
-    # ArgumentParser
+    parser = ArgumentParser(description="Reader/Writer")
+    parser.add_argument('mode', type=int, choices=[0, 1], help='0 - reader; 1 - writer')
+    parser.add_argument('filename', type=str, help='Filename')
+    args = parser.parse_args()
 
-    read_func = get_reader('log.txt')
-
-    while True:
-
-        try:
-            content = read_func()
-            print_lines(content)
-        except TooLargeContent as exc:
-            print('Too large. skip')
-
-        sleep(1)
-
-
-
-
-if __name__ == '__main__':
-    # ArgumentParser
-
-    read_func = get_reader('log.txt')
-
-    while True:
-
-        try:
-            content = read_func()
-            print_lines(content)
-        except TooLargeContent as exc:
-            print('Too large. skip')
-
-        sleep(1)
+    if args.mode == 0:
+        read_func = get_reader(args.filename)
+        while True:
+            try:
+                content = read_func()
+                print_lines(content)
+            except TooLargeContent:
+                print('Too large. Skip.')
+            time.sleep(1)
+    elif args.mode == 1:
+        writer = get_writer(args.filename)
+        while True:
+            current_date = datetime.now()
+            new_line = "Current date:" + str(current_date) + "\n"
+            writer(new_line)
+            time.sleep(1)
 
 
-
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# TypeError: func() missing 1 required positional argument: 'b'
-
-
-# KeyError - dict doesn't have key
-# ValueError - int('hello')
-# RuntimeError - unexpected behavior ()
-# MemoryError - memory overflow [45] * 1000000000000000000000000000000000000
-# TypeError - def func(a,b)          func(1)
-# KeyboardInterrupt - Ctrl + C
-# OSError - when file doesn't exists
-# ZeroDivisionError
-
-
-# n = 5
-
-# ZeroDivisionError
-# OSError
-# FileNotFoundError
-# try:
-#     a = ceil(1/n * 10)
-#     file = open(f'file{a}.txt', 'r')
-# except ZeroDivisionError as exc:
-#     print('Zero division', type(exc))
-# except (OSError, ValueError) as exc:
-#     print('Os error', type(exc))
-# except Exception as e:
-#     print('Any other exception', e)
-
-"""
- seek(offset, whence=os.SEEK_SET, /)
-
-    Change the stream position to the given byte offset, interpreted relative to the position indicated by whence, and return the new absolute position. Values for whence are:
-
-        os.SEEK_SET or 0 – start of the stream (the default); offset should be zero or positive
-
-        os.SEEK_CUR or 1 – current stream position; offset may be negative
-
-        os.SEEK_END or 2 – end of the stream; offset is usually negative
-
-"""
 

@@ -1,6 +1,6 @@
 {
   "field": {
-    "number_circles": 200,
-    "field_size": 100
+    "number_circles": 40,
+    "field_size": 400
   }
 }

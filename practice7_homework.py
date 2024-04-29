@@ -48,13 +48,13 @@ class Circle:
         kd_tree = KDTree(coords)
 
         # Query the k-d tree to find potential neighbors within the possible range
-        potential_indices = kd_tree.query_ball_point(self._coords, self.r)
+        potential_indices = kd_tree.query_ball_point(self._coords, self._radius*2)
         potential_neighbors = [all_circles_list[i] for i in potential_indices]
 
         # Determine children circles that can be eaten
         eatable_neighbors = []
         for neighbor in potential_neighbors:
-            if self.can_eat(neighbor):
+            if neighbor != self and self.can_eat(neighbor) and neighbor not in eatable_neighbors:
                 self.children.append(neighbor)
                 eatable_neighbors.append(neighbor)
 
@@ -68,6 +68,7 @@ class Circle:
             return eatable_kd_tree
         else:
             return None  # No eatable neighbors
+
 
     def can_eat(self, other):
         distance = math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
@@ -112,7 +113,7 @@ class Field(metaclass=Singleton):
         for _ in range(circle_amount):
             x = random.randint(-self.field_size, self.field_size)
             y = random.randint(-self.field_size, self.field_size)
-            r = random.randint(1, 20)
+            r = random.randint(50, 200)
             circles.append(Circle(r, (x, y)))
         return set(circles)
 
@@ -156,9 +157,14 @@ if __name__ == '__main__':
 
     # Output the k-d trees for each circle
     max_eated = 0
+
     for circle, tree in forest.get_trees().items():
         print(f"Circle at {circle._coords} with radius {circle._radius} can eat {circle.eat_count} circles:")
-        print(f"The k-d tree for this circle has {len(tree.data)} eatable members.\n")
+        print(f"The k-d tree for this circle has {len(tree.data)} eatable members:")
+
+    # Print all members (coordinates) of the k-d tree
+        for coords in tree.data:
+            print(f"    Member at {coords}")
 
         if circle.eat_count > max_eated:
             max_eated = circle.eat_count

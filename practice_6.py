@@ -76,5 +76,6 @@ class Field:
         # each period of move all circles randomly x e [-1,0,1]  y e [-1, 0, 1] etc
         # if they are collided - destroy both
         # output circles that are left in 500 iterations
+        # print when Circle collided  ------ USE __del__ method !!
 
 # 0, 0, 100, 100

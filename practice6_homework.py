@@ -50,8 +50,20 @@ class Circle:
 
 class Field:
     FIELD_SIZE = 100
-    def __init__(self, set_circles):
-        self._circles = set_circles
+    circle_amount = 200
+    def __init__(self, field_size, circle_amount):
+        self.FIELD_SIZE = field_size
+        self.CIRCLE_AMOUNT = circle_amount
+        self._circles = self.generate_random_circles(circle_amount)
+
+    def generate_random_circles(self, circle_amount):
+        circles = []
+        for _ in range(self.circle_amount):
+            x = random.randint(-self.FIELD_SIZE, self.FIELD_SIZE)
+            y = random.randint(-self.FIELD_SIZE, self.FIELD_SIZE)
+            r = random.randint(0, 20)
+            circles.append(Circle(r, (x, y)))
+        return set(circles)
 
     def run(self):
         collided_circles = set()
@@ -75,16 +87,13 @@ class Field:
                         max(-self.FIELD_SIZE, min(self.FIELD_SIZE, c.coords[1] + dy)))
 if __name__ == '__main__':
     circles = []
-    for _ in range(200):
-        x, y, r = random.randint(-100, 100), random.randint(-100, 100), random.randint(0, 20)
-        circles.append(Circle(r, (x, y)))
-
-    set_circles = set(circles)
-    f1 = Field(set_circles)
+    field_size = 100
+    circle_amount = 200
+    f1 = Field(field_size, circle_amount)
 
     for _ in range(500):
         f1.run()
         f1.move()
 
-    for c in set_circles:
+    for c in f1._circles:
         print(c)

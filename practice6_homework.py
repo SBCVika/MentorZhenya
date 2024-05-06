@@ -49,6 +49,7 @@ class Circle:
 # Magic methods
 
 class Field:
+    FIELD_SIZE = 100
     def __init__(self, set_circles):
         self._circles = set_circles
 
@@ -70,8 +71,8 @@ class Field:
             dx = random.randint(-1, 1)
             dy = random.randint(-1, 1)
             x, y = c.coords
-            c.coords = (x + dx, y + dy)
-
+            c.coords = (max(-self.FIELD_SIZE, min(self.FIELD_SIZE, c.coords[0] + dx)),
+                        max(-self.FIELD_SIZE, min(self.FIELD_SIZE, c.coords[1] + dy)))
 if __name__ == '__main__':
     circles = []
     for _ in range(200):

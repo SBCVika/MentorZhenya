@@ -49,18 +49,45 @@ class Circle:
 # Magic methods
 
 class Field:
-    FIELD_SIZE = 100
-    circle_amount = 200
-    def __init__(self, field_size, circle_amount):
-        self.FIELD_SIZE = field_size
-        self.CIRCLE_AMOUNT = circle_amount
-        self._circles = self.generate_random_circles(circle_amount)
+    DEFAULT_FIELD_SIZE = 100
+    DEFAULT_CIRCLES_AMOUNT = 200
+
+    def __init__(self, field_size=None, circles_amount=None):
+        self.field_size = field_size if field_size is not None else Field.DEFAULT_FIELD_SIZE
+        self.circles_amount = circles_amount if circles_amount is not None else Field.DEFAULT_CIRCLES_AMOUNT
+        self._circles = self.generate_random_circles(self.circles_amount)
+
+    def validate_positive_integer(func):
+        def wrapper(*args, **kwargs):
+            value = args[1]  # Assuming the value is passed as the second argument
+            if not isinstance(value, int) or value <= 0:
+                raise ValueError(f"{func.__name__.replace('_', ' ')} must be a positive integer")
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    @property
+    def field_size(self):
+        return self._field_size
+
+    @field_size.setter
+    @validate_positive_integer
+    def field_size(self, value):
+        self._field_size = value
+    @property
+    def circles_amount(self):
+        return self._field_size
+
+    @circles_amount.setter
+    @validate_positive_integer
+    def circles_amount(self, value):
+        self._circles_amount = value
 
     def generate_random_circles(self, circle_amount):
         circles = []
-        for _ in range(self.circle_amount):
-            x = random.randint(-self.FIELD_SIZE, self.FIELD_SIZE)
-            y = random.randint(-self.FIELD_SIZE, self.FIELD_SIZE)
+        for _ in range(self._circles_amount):
+            x = random.randint(-self._field_size, self._field_size)
+            y = random.randint(-self._field_size, self._field_size)
             r = random.randint(0, 20)
             circles.append(Circle(r, (x, y)))
         return set(circles)
@@ -83,14 +110,14 @@ class Field:
             dx = random.randint(-1, 1)
             dy = random.randint(-1, 1)
             x, y = c.coords
-            c.coords = (max(-self.FIELD_SIZE, min(self.FIELD_SIZE, c.coords[0] + dx)),
-                        max(-self.FIELD_SIZE, min(self.FIELD_SIZE, c.coords[1] + dy)))
+            c.coords = (max(-self._field_size, min(self._field_size, c.coords[0] + dx)),
+                        max(-self._field_size, min(self._field_size, c.coords[1] + dy)))
 if __name__ == '__main__':
     circles = []
-    field_size = 100
-    circle_amount = 200
-    f1 = Field(field_size, circle_amount)
-
+    f1 = Field()
+    f1.field_size = 100  # Using setter method to update field_size
+    f1.circles_amount = 200  # Using setter method to update circles_amount
+    
     for _ in range(500):
         f1.run()
         f1.move()

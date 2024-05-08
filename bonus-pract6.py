@@ -32,7 +32,7 @@ while running:
     for circle in f1._circles:
         viewcoords = circle.coords[0] + f1.field_size, circle.coords[1] + f1.field_size
         pygame.draw.circle(screen, BLUE, viewcoords, circle.radius)
-    f1.move()
+    f1.move_all()
 
     # Update the display
     pygame.display.flip()

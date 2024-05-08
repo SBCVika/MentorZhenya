@@ -51,8 +51,20 @@ class Circle:
         self.coords = self.coords[0] + other[0], self.coords[1] + other[1]
 
 
+def validate_positive_integer(*types):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            argsi = args[1:]
+            for i, arg in enumerate(argsi):  # Assuming the value is passed as the second argument
+                if not isinstance(arg, types[i]) or arg < 0:
+                    raise ValueError(f"{func.__name__.replace('_', ' ')} must be a positive integer")
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+
 class Field:
-    DEFAULT_FIELD_SIZE = 100
+    DEFAULT_FIELD_SIZE = config.d['field_size']
     DEFAULT_CIRCLES_AMOUNT = 200
 
     def __init__(self, field_size=DEFAULT_FIELD_SIZE , circles_amount=DEFAULT_CIRCLES_AMOUNT):
@@ -60,21 +72,12 @@ class Field:
         self.circles_amount = circles_amount
         self._circles = self.generate_random_circles(self.circles_amount)
 
-    def validate_positive_integer(func):
-        def wrapper(*args, **kwargs):
-            value = args[1]  # Assuming the value is passed as the second argument
-            if not isinstance(value, int) or value < 0:
-                raise ValueError(f"{func.__name__.replace('_', ' ')} must be a positive integer")
-            return func(*args, **kwargs)
-
-        return wrapper
-
     @property
     def field_size(self):
         return self._field_size
 
     @field_size.setter
-    @validate_positive_integer
+    @validate_positive_integer(int)
     def field_size(self, value):
         self._field_size = value
 
@@ -83,7 +86,7 @@ class Field:
         return self._field_size
 
     @circles_amount.setter
-    @validate_positive_integer
+    @validate_positive_integer(int)
     def circles_amount(self, value):
         self._circles_amount = value
 
@@ -108,7 +111,7 @@ class Field:
         self._circles -= collided_circles
         print(len(self._circles), len(collided_circles))
 
-    def move(self):
+    def move_all(self):
         for c in self._circles: # (1, (3,2)) (1, (1,3)) (1, (1,4))
             dx = random.randint(-1, 1)
             dy = random.randint(-1, 1)
@@ -125,7 +128,7 @@ if __name__ == '__main__':
 
     for _ in range(500):
         f1.run()
-        f1.move()
+        f1.move_all()
 
     for c in f1._circles:
         print(c)

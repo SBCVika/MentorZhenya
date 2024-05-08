@@ -52,9 +52,9 @@ class Field:
     DEFAULT_FIELD_SIZE = 100
     DEFAULT_CIRCLES_AMOUNT = 200
 
-    def __init__(self, field_size=None, circles_amount=None):
-        self.field_size = field_size if field_size is not None else Field.DEFAULT_FIELD_SIZE
-        self.circles_amount = circles_amount if circles_amount is not None else Field.DEFAULT_CIRCLES_AMOUNT
+    def __init__(self, field_size=DEFAULT_FIELD_SIZE , circles_amount=DEFAULT_FIELD_SIZE):
+        self.field_size = field_size
+        self.circles_amount = circles_amount
         self._circles = self.generate_random_circles(self.circles_amount)
 
     def validate_positive_integer(func):

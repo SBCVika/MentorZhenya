@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-from practice6_homework import Field
+from practice7_homework import Field
 
 # Initialize pygame
 pygame.init()
@@ -30,8 +30,8 @@ while running:
     screen.fill((0,) * 3)
     f1.run()
     for circle in f1._circles:
-        viewcoords = circle.coords[0] + f1.field_size, circle.coords[1] + f1.field_size
-        pygame.draw.circle(screen, BLUE, viewcoords, circle.radius)
+        viewcoords = circle._coords[0] + f1.field_size, circle._coords[1] + f1.field_size
+        pygame.draw.circle(screen, BLUE, viewcoords, circle._radius)
     f1.move_all()
 
     # Update the display

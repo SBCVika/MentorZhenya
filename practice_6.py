@@ -6,6 +6,8 @@ from math import sqrt
 #  Task - many objects: find all collided object in 2-dimensional surface, use radius and coords for computation
 
 class Circle:
+
+    jgtoergtr = [Config('filename.json')]
     def __init__(self, radius, coords):
         self._radius = radius
         self._coords = coords

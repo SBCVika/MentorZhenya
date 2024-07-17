@@ -7,7 +7,6 @@ from math import sqrt
 
 class Circle:
 
-    jgtoergtr = [Config('filename.json')]
     def __init__(self, radius, coords):
         self._radius = radius
         self._coords = coords

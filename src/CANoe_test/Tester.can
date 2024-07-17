@@ -1,0 +1,21 @@
+﻿/*@!Encoding:65001*/
+includes
+{
+  
+}
+
+variables
+{
+  
+}
+
+on key 'x'
+{
+  message msg_TripOdometer myMsg;
+  output(myMsg);
+}
+
+on message msg_OperationTime
+{
+  write("Minutes = %d, Seconds = %d", this.Minutes, this.Seconds);
+}

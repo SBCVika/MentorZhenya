@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Panel Type="Vector.CANalyzer.Panels.PanelSerializer, Vector.CANalyzer.Panels.Serializer, Version=18.0.150.0, Culture=neutral, PublicKeyToken=null">
+  <Object Type="Vector.CANalyzer.Panels.Runtime.Panel, Vector.CANalyzer.Panels.Common, Version=18.0.150.0, Culture=neutral, PublicKeyToken=null" Name="Panel" ControlName="Panel">
+    <Object Type="Vector.CANalyzer.Panels.Design.LCDControl, Vector.CANalyzer.Panels.CommonControls, Version=18.0.150.0, Culture=neutral, PublicKeyToken=null" Name="X4600c79aebae7e44c2eaf83e53d7202a44ee" ControlName="LCD Control 2">
+      <Property Name="Name">X4600c79aebae7e44c2eaf83e53d7202a44ee</Property>
+      <Property Name="Size">116, 50</Property>
+      <Property Name="Location">189, 38</Property>
+      <Property Name="DecimalPlaces">0</Property>
+      <Property Name="NumberIntDigits">2</Property>
+      <Property Name="SymbolConfiguration">8;2;CAN;MyECU;msg_OperationTime;Seconds;1;CAN;CAN1;-1;;;Value;;;0</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.LCDControl, Vector.CANalyzer.Panels.CommonControls, Version=18.0.150.0, Culture=neutral, PublicKeyToken=null" Name="X013da0c7e1833e4c05ebcd7e2ccbe787546e" ControlName="LCD Control 1">
+      <Property Name="Name">X013da0c7e1833e4c05ebcd7e2ccbe787546e</Property>
+      <Property Name="Size">135, 50</Property>
+      <Property Name="Location">17, 38</Property>
+      <Property Name="DecimalPlaces">0</Property>
+      <Property Name="NumberIntDigits">3</Property>
+      <Property Name="SymbolConfiguration">8;2;CAN;MyECU;msg_OperationTime;Minutes;1;CAN;CAN1;-1;;;Value;;;0</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.CheckBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=18.0.150.0, Culture=neutral, PublicKeyToken=null" Name="Xd7837d82e881ee4e4fe9274e10be0f2e98ba" ControlName="Check Box 1">
+      <Property Name="Name">Xd7837d82e881ee4e4fe9274e10be0f2e98ba</Property>
+      <Property Name="Size">60, 17</Property>
+      <Property Name="Location">33, 15</Property>
+      <Property Name="Text">KeyOn</Property>
+      <Property Name="TabIndex">0</Property>
+      <Property Name="CheckValueVTXml">&lt;Version&gt;2&lt;/Version&gt;&lt;LowerUpper&gt;Lower&lt;/LowerUpper&gt;&lt;RxValue&gt;1&lt;/RxValue&gt;</Property>
+      <Property Name="CheckValueVT">1;Lower;1</Property>
+      <Property Name="CheckValue">1</Property>
+      <Property Name="UncheckValueVTXml">&lt;Version&gt;2&lt;/Version&gt;&lt;LowerUpper&gt;Lower&lt;/LowerUpper&gt;&lt;RxValue&gt;0&lt;/RxValue&gt;</Property>
+      <Property Name="UncheckValueVT">1;Lower;0</Property>
+      <Property Name="UncheckValue">0</Property>
+      <Property Name="SymbolConfiguration">8;2;CAN;Tester;msg_KeyOn;KeyOn;1;CAN;CAN1;-1;;;Value;;;0</Property>
+    </Object>
+    <Property Name="Name">Panel</Property>
+    <Property Name="Size">430, 125</Property>
+    <Property Name="Location">0, 0</Property>
+    <Property Name="BackColor">White</Property>
+  </Object>
+</Panel>

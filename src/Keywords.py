@@ -7,6 +7,7 @@ class Keywords:
         self._ecus = {13: MockedECU(13, 'CAN0', 100500)}
         self._ecucanoe = MockedECUCANoe(1, 1,'CAN')
 
+
     def start_ecu(self):
         self._ecu.power_on()
 
@@ -18,6 +19,7 @@ class Keywords:
         return [int(ch) for ch in data]
 
     def ecu_cleanup(self, ecu_id):
+
         self._ecus[ecu_id].power_off()
 
     def start_ecu_canoe(self):
@@ -38,7 +40,4 @@ class Keywords:
 
     def stop_ecu_canoe(self):
         self._ecucanoe.power_off_canoe()
-
-
-
 
